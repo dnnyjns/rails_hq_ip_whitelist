@@ -1,9 +1,5 @@
 module IPWhitelist
   module Controller
-    def self.included(base)
-      base.before_action :check_ip_whitelist
-    end
-
     def check_ip_whitelist
       if current_user && current_user.respond_to?(:ip_whitelist) && current_user.ip_whitelist.present?
         # Since requests can come through cloudflare, try that IP first.
