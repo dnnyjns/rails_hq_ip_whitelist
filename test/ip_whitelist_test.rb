@@ -4,11 +4,11 @@ class IPWhitelistTest < ActionDispatch::IntegrationTest
   test "Blocks all IPs except whitelist if a whitelist exists" do
     ::ApplicationController.class_eval do
       def current_user
-        User.new(ip_whitelist: ["1.2.3.4"])
+        User.new(ip_whitelist: ["70.184.237.0"])
       end
     end
 
-    get "/", { headers: { "REMOTE_ADDR": "4.3.2.1"} }
+    get "/", { headers: { "REMOTE_ADDR": "192.168.1.0"} }
     assert_equal 500, status
   end
 
@@ -16,11 +16,23 @@ class IPWhitelistTest < ActionDispatch::IntegrationTest
 
     ::ApplicationController.class_eval do
       def current_user
-        User.new(ip_whitelist: ["1.2.3.4"])
+        User.new(ip_whitelist: ["70.184.237.19"])
       end
     end
 
-    get "/", { headers: { "REMOTE_ADDR": "1.2.3.4"} }
+    get "/", { headers: { "REMOTE_ADDR": "70.184.237.19"} }
+    assert_equal 200, status
+  end
+
+  test "Allow IPs in a range" do
+
+    ::ApplicationController.class_eval do
+      def current_user
+        User.new(ip_whitelist: ["70.184.237.0/24"])
+      end
+    end
+
+    get "/", { headers: { "REMOTE_ADDR": "70.184.237.19"} }
     assert_equal 200, status
   end
 
