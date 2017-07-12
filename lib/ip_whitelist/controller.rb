@@ -1,9 +1,17 @@
 module IPWhitelist
   module Controller
+    POSSIBLE_IP_HEADERS = [
+      "X-Forwarded-For",
+      "CF-Connecting-IP", # Cloudflare
+      "REMOTE_ADDR"
+    ]
+
     def check_ip_whitelist
       if current_user && current_user.respond_to?(:ip_whitelist) && current_user.ip_whitelist.present?
         # Since requests can come through cloudflare, try that IP first.
-        ip = IPAddr.new(request.headers["CF-Connecting-IP"] || request.headers["REMOTE_ADDR"])
+        # ip = IPAddr.new(request.headers["CF-Connecting-IP"] || request.headers["REMOTE_ADDR"])
+
+        ip = IPAddr.new(POSSIBLE_IP_HEADERS.map{ |header| request.headers[header] }.compact[0])
 
         return if current_user.ip_whitelist.detect{ |ip_or_range|
           # Check if the IP is equal to the whitelisted IP, or is within the
