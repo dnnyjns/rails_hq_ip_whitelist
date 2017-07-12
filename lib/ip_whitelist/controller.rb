@@ -11,6 +11,8 @@ module IPWhitelist
           (ip_or_range.is_a?(IPAddr) ? ip_or_range : IPAddr.new(ip_or_range)) === ip
         }
 
+        Rails.logger.info("#{current_user.username}'s IP (#{ip}) is not in authorized list (#{current_user.ip_whitelist.join(", " )})")
+
         if redirect = IPWhitelist.configuration.redirect
           redirect_to redirect
         else
