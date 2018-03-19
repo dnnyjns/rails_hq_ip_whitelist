@@ -13,7 +13,7 @@ module IPWhitelist
 
         Rails.logger.info("#{current_user.username}'s IP (#{ip}) is not in authorized list (#{current_user.ip_whitelist.join(", " )})")
 
-        if redirect = IPWhitelist.configuration.redirect
+        if redirect = IPWhitelist.redirect
           redirect_to redirect
         else
           render text: "Not Authorized", status: 401
