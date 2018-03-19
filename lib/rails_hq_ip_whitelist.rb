@@ -1,17 +1,21 @@
 require "ip_whitelist/controller"
 module IPWhitelist
-  Configuration = Struct.new(:redirect)
 
-  class << self
-    attr_writer :configuration
+  def self.config
+    @config ||= ::ActiveSupport::OrderedOptions.new
   end
 
-  def self.configuration
-    @configuration ||= Configuration.new
+  def self.configure(&block)
+    config.instance_eval(&block)
   end
 
-  def self.configure
-    yield(configuration)
+  def self.redirect
+    @redirect ||=
+      if config.redirect.is_a?(Proc)
+        config.redirect.call
+      else
+        config.redirect
+      end
   end
 
 end
