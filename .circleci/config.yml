@@ -1,0 +1,38 @@
+version: 2.1
+
+orbs:
+  ruby: onehq/ruby@2.0.10
+  github: onehq/github@1.2.2
+
+aliases:
+- &app rails_hq_ip_whitelist
+- &checksum rails_hq_ip_whitelist.gemspec
+
+workflows:
+  build-deploy:
+    jobs:
+    - ruby/run_specs:
+        app: *app
+        checksum: *checksum
+        isGem: true
+    - ruby/run_sorbet:
+        app: *app
+        checksum: *checksum
+        requires:
+        - ruby/run_specs
+    - ruby/run_rubocop:
+        app: *app
+        checksum: *checksum
+        requires:
+        - ruby/run_specs
+    - ruby/publish_gem:
+        app: *app
+        checksum: *checksum
+        requires:
+        - ruby/run_rubocop
+        - ruby/run_sorbet
+        - ruby/run_specs
+        filters:
+          branches:
+            only:
+            - master

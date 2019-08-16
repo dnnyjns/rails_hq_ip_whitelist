@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
@@ -16,8 +18,9 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", ">= 4.2.0"
+  s.add_dependency "rails",                              "~> 6.0"
+  s.add_dependency "sorbet-runtime",                     "~> 0.0"
 
-  s.add_development_dependency "byebug"
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "sorbet",                 "~> 0.0"
+  s.add_development_dependency "testhq",                 "~> 2.0"
 end
