@@ -8,6 +8,7 @@ AllCops:
   Exclude:
     - "**/node_modules/**/*"
     - "**/spec/**/*"
+    - "**/templates/**/*"
     - "**/vendor/**/*"
 
 Bundler:
@@ -23,13 +24,13 @@ Naming:
   Enabled: true
 
 Rails:
-  Enabled: True
+  Enabled: true
 
 Performance:
-  Enabled: True
+  Enabled: true
 
 Security:
-  Enabled: True
+  Enabled: true
 
 Layout/CaseIndentation:
   Enabled: true
@@ -145,10 +146,23 @@ Naming/UncommunicativeMethodParamName:
   Enabled: false
 
 Performance/RedundantBlockCall:
-  Enabled: False
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Rails/Date:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
 
 Rails/Output:
   Enabled: false
+  
+Rails/SkipsModelValidations:
+  Enabled: true
+  Whitelist: [update_all]
 
 # Prefer &&/|| over and/or.
 Style/AndOr:

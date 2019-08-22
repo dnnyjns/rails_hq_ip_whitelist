@@ -4730,10 +4730,8 @@
 # wrong constant name kilobytes
 # wrong constant name megabyte
 # wrong constant name megabytes
-# wrong constant name negative?
 # wrong constant name petabyte
 # wrong constant name petabytes
-# wrong constant name positive?
 # wrong constant name round$1
 # wrong constant name step$2
 # wrong constant name terabyte

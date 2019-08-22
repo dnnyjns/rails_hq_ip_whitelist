@@ -9406,13 +9406,9 @@ class Numeric
 
   def megabytes(); end
 
-  def negative?(); end
-
   def petabyte(); end
 
   def petabytes(); end
-
-  def positive?(); end
 
   def terabyte(); end
 
